@@ -6,7 +6,7 @@ import {
   removeContact
 } from '../services/contactsServices.js';
 
-const listContactsHandler = async (req, res, next) => {
+export const listContactsHandler = async (req, res, next) => {
   try {
     const contacts = await listContacts();
     res.status(200).json(contacts);
@@ -15,7 +15,7 @@ const listContactsHandler = async (req, res, next) => {
   }
 };
 
-const getContactByIdHandler = async (req, res, next) => {
+export const getContactByIdHandler = async (req, res, next) => {
   try {
     const { id } = req.params;
     const contact = await getContactById(id);
@@ -28,7 +28,7 @@ const getContactByIdHandler = async (req, res, next) => {
   }
 };
 
-const addContactHandler = async (req, res, next) => {
+export const addContactHandler = async (req, res, next) => {
   try {
     const { name, email, phone } = req.body;
     const newContact = await addContact(name, email, phone);
@@ -38,7 +38,7 @@ const addContactHandler = async (req, res, next) => {
   }
 };
 
-const updateContactHandler = async (req, res, next) => {
+export const updateContactHandler = async (req, res, next) => {
   try {
     const { id } = req.params;
     const updatedContact = await updateContact(id, req.body);
@@ -51,7 +51,7 @@ const updateContactHandler = async (req, res, next) => {
   }
 };
 
-const removeContactHandler = async (req, res, next) => {
+export const removeContactHandler = async (req, res, next) => {
   try {
     const { id } = req.params;
     const removedContact = await removeContact(id);
@@ -62,12 +62,4 @@ const removeContactHandler = async (req, res, next) => {
   } catch (error) {
     next(error);
   }
-};
-
-export default {
-  listContactsHandler,
-  getContactByIdHandler,
-  addContactHandler,
-  updateContactHandler,
-  removeContactHandler
 };
