@@ -1,67 +1,17 @@
-import contactsServices from "../services/contactsServices.js";
+import express from "express";
+import { validateBody } from "../helpers/validateBody.js";
+import contactsController from "../controllers/contactsController.js";
 
-const listContacts = async (req, res, next) => {
-  try {
-    const contacts = await contactsServices.listContacts();
-    res.json(contacts);
-  } catch (error) {
-    next(error);
-  }
-};
+const router = express.Router();
 
-const getContactById = async (req, res, next) => {
-  try {
-    const { id } = req.params;
-    const contact = await contactsServices.getContactById(id);
-    if (!contact) {
-      return res.status(404).json({ message: "Contact not found" });
-    }
-    res.json(contact);
-  } catch (error) {
-    next(error);
-  }
-};
+router.get("/", contactsController.listContacts);
 
-const addContact = async (req, res, next) => {
-  try {
-    const { name, email, phone } = req.body;
-    const newContact = await contactsServices.addContact(name, email, phone);
-    res.status(201).json(newContact);
-  } catch (error) {
-    next(error);
-  }
-};
+router.get("/:id", contactsController.getContactById);
 
-const updateContact = async (req, res, next) => {
-  try {
-    const { id } = req.params;
-    const updatedContact = await contactsServices.updateContact(id, req.body);
-    if (!updatedContact) {
-      return res.status(404).json({ message: "Contact not found" });
-    }
-    res.json(updatedContact);
-  } catch (error) {
-    next(error);
-  }
-};
+router.post("/", validateBody, contactsController.addContact);
 
-const removeContact = async (req, res, next) => {
-  try {
-    const { id } = req.params;
-    const removedContact = await contactsServices.removeContact(id);
-    if (!removedContact) {
-      return res.status(404).json({ message: "Contact not found" });
-    }
-    res.json(removedContact);
-  } catch (error) {
-    next(error);
-  }
-};
+router.put("/:id", validateBody, contactsController.updateContact);
 
-export default {
-  listContacts,
-  getContactById,
-  addContact,
-  updateContact,
-  removeContact
-};
+router.delete("/:id", contactsController.removeContact);
+
+export default router;
