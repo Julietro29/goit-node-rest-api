@@ -1,17 +1,17 @@
 import express from "express";
-import { validateBody } from "../helpers/validateBody.js";
-import contactsController from "../controllers/contactsController.js";
+import validateBody from "../helpers/validateBody.js";
+import { listContactsHandler, getContactByIdHandler, addContactHandler, updateContactHandler, removeContactHandler } from "../controllers/contactsControllers.js";
 
 const router = express.Router();
 
-router.get("/", contactsController.listContacts);
+router.get("/", listContactsHandler);
 
-router.get("/:id", contactsController.getContactById);
+router.get("/:id", getContactByIdHandler);
 
-router.post("/", validateBody, contactsController.addContact);
+router.post("/", validateBody, addContactHandler);
 
-router.put("/:id", validateBody, contactsController.updateContact);
+router.put("/:id", validateBody, updateContactHandler);
 
-router.delete("/:id", contactsController.removeContact);
+router.delete("/:id", removeContactHandler);
 
 export default router;
