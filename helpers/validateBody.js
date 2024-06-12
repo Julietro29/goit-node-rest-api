@@ -1,6 +1,6 @@
 import Joi from "joi";
 
-export const validateBody = (req, res, next) => {
+export default function validateBody(req, res, next) {
   const schema = Joi.object({
     name: Joi.string().required(),
     email: Joi.string().email().required(),
