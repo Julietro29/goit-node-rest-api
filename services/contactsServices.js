@@ -4,7 +4,7 @@ import crypto from "node:crypto";
 
 const contactsPath = path.resolve("db", "contacts.json");
 
-async function listContacts() {
+export const listContacts = async () => {
   try {
     const data = await fs.readFile(contactsPath, { encoding: "utf-8" });
 
@@ -16,7 +16,7 @@ async function listContacts() {
   }
 }
 
-async function getContactById(contactId) {
+export const getContactById = async (id) => {
   try {
     const data = await listContacts();
 
@@ -27,7 +27,7 @@ async function getContactById(contactId) {
   }
 }
 
-async function removeContact(contactId) {
+export const removeContact = async (id) => {
   try {
     const contact = await getContactById(contactId);
     if (contact === null) {
@@ -44,7 +44,7 @@ async function removeContact(contactId) {
   }
 }
 
-async function addContact(name, email, phone) {
+export const addContact = async (name, email, phone) => {
   try {
     const data = await listContacts();
     const newContact = {
@@ -61,7 +61,7 @@ async function addContact(name, email, phone) {
   }
 }
 
-async function updateContact(contactId, name, email, phone) {
+export const updateContact = async (id, name, email, phone) => {
   try {
     const existingContact = await getContactById(contactId);
     if (existingContact === null) {
