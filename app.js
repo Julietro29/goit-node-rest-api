@@ -10,7 +10,7 @@ app.use(morgan("tiny"));
 app.use(cors());
 app.use(express.json());
 
-app.use("/api/contacts", contactsRouter);  // Перевірте цей рядок
+app.use("/api/contacts", contactsRouter);
 
 app.use((_, res) => {
   res.status(404).json({ message: "Route not found" });
@@ -21,6 +21,6 @@ app.use((err, req, res, next) => {
   res.status(status).json({ message });
 });
 
-app.listen(3000, () => {
-  console.log("Server is running. Use our API on port: 3000");
+app.listen(3002, () => {
+  console.log("Server is running. Use our API on port: 3002");
 });
