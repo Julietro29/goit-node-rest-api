@@ -1,17 +1,15 @@
-import Joi from "joi";
+import HttpError from "./HttpError.js";
 
-export default function validateBody(req, res, next) {
-  const schema = Joi.object({
-    name: Joi.string().required(),
-    email: Joi.string().email().required(),
-    phone: Joi.string().required(),
-  });
+const validateBody = (schema) => {
+  const func = (req, _, next) => {
+    const { error } = schema.validate(req.body);
+    if (error) {
+      next(HttpError(400, error.message));
+    }
+    next();
+  };
 
-  const { error } = schema.validate(req.body);
-
-  if (error) {
-    return res.status(400).json({ message: error.details[0].message });
-  }
-
-  next();
+  return func;
 };
+
+export default validateBody;
