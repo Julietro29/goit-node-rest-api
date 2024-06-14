@@ -7,7 +7,6 @@ import contactsRouter from "./routes/contactsRouter.js";
 
 const app = express();
 
-// Підключаємося до бази даних
 connectDB();
 
 app.use(morgan("tiny"));
@@ -25,6 +24,6 @@ app.use((err, req, res, next) => {
   res.status(status).json({ message });
 });
 
-app.listen(3002, () => {
-  console.log("Server is running. Use our API on port: 3002");
+app.listen(3000, () => {
+  console.log("Server is running. Use our API on port: 3000");
 });
