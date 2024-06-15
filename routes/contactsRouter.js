@@ -2,12 +2,12 @@ import express from "express";
 import validateBody from "../helpers/validateBody.js";
 import * as schema from "../services/schemas/contactsSchemas.js";
 import {
-  getAllContacts,
-  getOneContact,
-  deleteContact,
-  createContact,
-  updateContact,
-  updateFavoriteStatus,
+    getAllContacts,
+    getOneContact,
+    deleteContact,
+    createContact,
+    updateContact,
+    updateFavoriteStatus,
 } from "../controllers/contactsControllers.js";
 
 const contactsRouter = express.Router();
