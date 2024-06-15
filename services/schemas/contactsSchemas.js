@@ -1,21 +1,43 @@
-import Joi from "joi";
+import mongoose from "mongoose";
+const { Schema } = mongoose;
 
-export const createContactSchema = Joi.object({
-    name: Joi.string().alphanum().min(3).max(30).required(),
-    email: Joi.string().email({ minDomainSegments: 2 }).required(),
-    phone: Joi.string().regex(/^\(\d{3}\) \d{3}-\d{4}$/).messages({
-        'string.pattern.base': 'Номер телефону повинен містити 10 цифр у форматі: (099) 999-9999.'
-    }).required()
-});
+const contactsShema = new Schema(
+  {
+    name: {
+      type: String,
+      required: [true, "Set name for contact"],
+      minlength: [3, "Name must be at least 3 characters long"],
+      maxlength: [50, "Name must be less than 50 characters long"],
+      match: [/^[a-zA-Z0-9\s\-_',.]+$/, 'Invalid characters in name'],
+},
+    email: {
+      type: String,
+      required: [true, "Set email for contact"],
+      unique: true,
+      validate: {
+        validator: function (v) {
+          return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v);
+        },
+        message: "Please enter a valid email",
+      },
+    },
+    phone: {
+      type: String,
+      required: [true, "Set phone for contact"],
+      validate: {
+        validator: function (v) {
+          return /^\([0-9]{3}\) [0-9]{3}\-[0-9]{4}$/.test(v);
+        },
+        message:
+          "The phone number must contain 10 digits in the format: (099) 999-9999",
+      },
+    },
+    favorite: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  { versionKey: false, timestamps: false }
+);
 
-export const updateContactSchema = Joi.object({
-    name: Joi.string().alphanum().min(3).max(30),
-    email: Joi.string().email({ minDomainSegments: 2 }),
-    phone: Joi.string().regex(/^\(\d{3}\) \d{3}-\d{4}$/).messages({
-        'string.pattern.base': 'Номер телефону повинен містити 10 цифр у форматі: (099) 999-9999.'
-    })
-});
-
-export const updateFavoriteSchema = Joi.object({
-    favorite: Joi.boolean().required(),
-});
+export const Contact = mongoose.model("Contact", contactsShema);
