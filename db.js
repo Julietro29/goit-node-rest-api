@@ -5,7 +5,7 @@ dotenv.config();
 
 const DB_URI = process.env.DB_URI;
 
-console.log("DB_URI:", DB_URI); // Додайте це для відлагодження
+console.log("DB_URI:", DB_URI);
 
 if (!DB_URI) {
     console.error("DB_URI is not defined. Please check your .env file.");

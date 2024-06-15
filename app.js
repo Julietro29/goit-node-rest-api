@@ -1,13 +1,13 @@
 import express from "express";
 import morgan from "morgan";
 import cors from "cors";
-import connectDB from "./db.js"; // Імпорт функції підключення до бази даних
+import connectDB from "./db.js";
 
 import contactsRouter from "./routes/contactsRouter.js";
 
 const app = express();
 
-connectDB(); // Виклик функції підключення до бази даних
+connectDB();
 
 app.use(morgan("tiny"));
 app.use(cors());
