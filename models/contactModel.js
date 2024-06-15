@@ -28,8 +28,7 @@ const contactsShema = new Schema(
         validator: function (v) {
           return /^\([0-9]{3}\) [0-9]{3}\-[0-9]{4}$/.test(v);
         },
-        message:
-          "The phone number must contain 10 digits in the format: (099) 999-9999",
+        message: "The phone number must contain 10 digits in the format: (099) 999-9999",
       },
     },
     favorite: {
